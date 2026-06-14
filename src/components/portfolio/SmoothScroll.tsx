@@ -11,27 +11,29 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
   const initialized = useRef(false);
 
   useEffect(() => {
-    // Prevent double-init in React StrictMode
     if (initialized.current) return;
     initialized.current = true;
 
-    // Ensure GSAP is ready
     if (!ensureGsapReady()) {
       console.warn('[SmoothScroll] GSAP not ready — using native scroll');
       return;
     }
 
-    // ---- Mobile detection: skip Lenis on touch devices ----
-    // Lenis intercepts touch events which causes lag/jank on mobile.
-    // On mobile, native scroll is already smooth, so Lenis is not needed.
+    // ---- Mobile / touch detection ----
     const isTouchDevice =
       typeof window !== 'undefined' &&
       (('ontouchstart' in window) ||
         (navigator.maxTouchPoints > 0) ||
         (window.matchMedia?.('(hover: none) and (pointer: coarse)').matches));
 
+    // On touch devices, add touch-action for smooth native scrolling
+    // and do NOT load Lenis at all
     if (isTouchDevice) {
-      // Still set up ScrollTrigger refreshes for layout recalculation
+      document.documentElement.style.touchAction = 'pan-y';
+      document.body.style.touchAction = 'pan-y';
+      document.documentElement.style.webkitOverflowScrolling = 'touch';
+
+      // ScrollTrigger refreshes only
       const timers: ReturnType<typeof setTimeout>[] = [];
       [100, 300, 600, 1000, 2000, 3500].forEach((delay) => {
         timers.push(setTimeout(() => {
@@ -54,6 +56,8 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
       return () => {
         timers.forEach(clearTimeout);
         window.removeEventListener('load', handleLoad);
+        document.documentElement.style.touchAction = '';
+        document.body.style.touchAction = '';
       };
     }
 
@@ -62,7 +66,6 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     let rafCallback: ((time: number) => void) | null = null;
     let destroyed = false;
 
-    // Dynamic import of Lenis to avoid SSR/ESM issues
     import('lenis')
       .then((module) => {
         if (destroyed) return;
@@ -87,7 +90,6 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
         console.warn('[SmoothScroll] Lenis import failed, using native scroll:', err);
       });
 
-    // Staggered refreshes to catch all layout/image load states
     const timers: ReturnType<typeof setTimeout>[] = [];
     [100, 300, 600, 1000, 2000, 3500].forEach((delay) => {
       timers.push(setTimeout(() => {
