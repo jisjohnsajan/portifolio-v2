@@ -41,6 +41,15 @@ const projects: Project[] = [
     github: 'https://github.com/jisjohnsajan/UniFit-Platfrom',
     tags: ['NFC', 'IoT', 'Full Stack', 'Automation'],
   },
+  {
+  title: 'Portfolio V2',
+  subtitle: 'Personal Portfolio Website',
+  description:
+    'A responsive and interactive personal portfolio featuring smooth scroll animations, custom cursor, certificate lightbox, and a dark recruiter-focused design built with modern web technologies.',
+  image: '/portifolio-v2.jpg',
+  github: 'https://github.com/jisjohnsajan/portifolio-v2',
+  tags: ['Next.js', 'GSAP', 'TypeScript', 'Tailwind'],
+  },
 ];
 
 export default function ProjectsSection() {
