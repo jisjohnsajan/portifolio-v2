@@ -16,11 +16,20 @@ export default function ContactSection() {
   const headingRef = useRef<HTMLDivElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
   const [hoveredChar, setHoveredChar] = useState<number | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const heading = "LET'S WORK TOGETHER";
 
-  // Magnetic button handler
-  const handleMagneticMove = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleEmailCopy = useCallback(() => {
+    navigator.clipboard.writeText('jisjohnsajan@gmail.com').then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }).catch(() => {
+      window.location.href = 'mailto:jisjohnsajan@gmail.com';
+    });
+  }, []);
+
+  const handleMagneticMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
     const btn = e.currentTarget;
     const rect = btn.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
@@ -28,7 +37,7 @@ export default function ContactSection() {
     btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
   }, []);
 
-  const handleMagneticLeave = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleMagneticLeave = useCallback((e: React.MouseEvent<HTMLElement>) => {
     e.currentTarget.style.transform = 'translate(0, 0)';
   }, []);
 
@@ -124,32 +133,56 @@ export default function ContactSection() {
     return () => ctx.revert();
   }, []);
 
+  // Build word-level spans so "TOGETHER" never breaks mid-word on mobile
+  const words = heading.split(' ');
+
+  // Compute global character index (spaces count too)
+  function getGlobalIndex(wordIndex: number, charIndex: number): number {
+    let idx = 0;
+    for (let w = 0; w < wordIndex; w++) {
+      idx += words[w].length + 1; // +1 for the space
+    }
+    return idx + charIndex;
+  }
+
   return (
     <section
       ref={sectionRef}
       className="relative w-full py-24 sm:py-32 md:py-40 px-6 sm:px-10 md:px-16 lg:px-24 animated-gradient overflow-hidden"
     >
       <div className="max-w-[1200px] mx-auto text-center">
-        {/* Heading with per-character hover */}
+        {/* Heading with per-character hover — word-level wrapping prevents mid-word breaks */}
         <div
           ref={headingRef}
           className="mb-6 sm:mb-8"
           style={{ perspective: '500px' }}
         >
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight">
-            {heading.split('').map((char, i) => (
+          <h2
+            className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight flex flex-wrap justify-center gap-x-2 sm:gap-x-3"
+          >
+            {words.map((word, wi) => (
               <span
-                key={i}
-                className="contact-letter inline-block"
-                style={{
-                  color: hoveredChar === i ? '#e63946' : '#f5f0eb',
-                  transform: hoveredChar === i ? 'translateY(-8px)' : 'translateY(0)',
-                  transition: 'color 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
-                }}
-                onMouseEnter={() => setHoveredChar(i)}
-                onMouseLeave={() => setHoveredChar(null)}
+                key={wi}
+                className="inline-flex whitespace-nowrap"
               >
-                {char === ' ' ? '\u00A0' : char}
+                {word.split('').map((char, ci) => {
+                  const globalIndex = getGlobalIndex(wi, ci);
+                  return (
+                    <span
+                      key={ci}
+                      className="contact-letter inline-block"
+                      style={{
+                        color: hoveredChar === globalIndex ? '#e63946' : '#f5f0eb',
+                        transform: hoveredChar === globalIndex ? 'translateY(-8px)' : 'translateY(0)',
+                        transition: 'color 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
+                      }}
+                      onMouseEnter={() => setHoveredChar(globalIndex)}
+                      onMouseLeave={() => setHoveredChar(null)}
+                    >
+                      {char}
+                    </span>
+                  );
+                })}
               </span>
             ))}
           </h2>
@@ -167,15 +200,15 @@ export default function ContactSection() {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-12 sm:mb-16">
-          <a
-            href="mailto:jisjohnsajan@gmail.com"
+          <button
+            onClick={handleEmailCopy}
             className="magnetic-btn-cta magnetic-spring inline-flex items-center gap-3 px-8 py-4 bg-[#e63946] text-[#f5f0eb] rounded-xl font-heading font-semibold text-base sm:text-lg hover:bg-[#e63946]/90 transition-colors"
             onMouseMove={handleMagneticMove}
             onMouseLeave={handleMagneticLeave}
           >
             <Mail size={20} />
-            Email Me
-          </a>
+            {copied ? 'Copied!' : 'Email Me'}
+          </button>
           <a
             href="/Jis_John_Sajan_Resume.pdf"
             target="_blank"
