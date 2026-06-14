@@ -45,7 +45,6 @@ export default function ContactSection() {
     if (!ensureGsapReady()) return;
 
     const ctx = gsap.context(() => {
-      // Heading characters
       if (headingRef.current) {
         const chars = headingRef.current.querySelectorAll('.contact-letter');
         gsap.fromTo(
@@ -67,7 +66,6 @@ export default function ContactSection() {
         );
       }
 
-      // Subtitle
       gsap.fromTo(
         subRef.current,
         { y: 30, opacity: 0 },
@@ -84,7 +82,6 @@ export default function ContactSection() {
         }
       );
 
-      // Buttons
       const btns = sectionRef.current?.querySelectorAll('.magnetic-btn-cta');
       if (btns) {
         gsap.fromTo(
@@ -106,7 +103,6 @@ export default function ContactSection() {
         );
       }
 
-      // Social icons
       const icons = sectionRef.current?.querySelectorAll('.social-icon');
       if (icons) {
         gsap.fromTo(
@@ -136,11 +132,10 @@ export default function ContactSection() {
   // Build word-level spans so "TOGETHER" never breaks mid-word on mobile
   const words = heading.split(' ');
 
-  // Compute global character index (spaces count too)
   function getGlobalIndex(wordIndex: number, charIndex: number): number {
     let idx = 0;
     for (let w = 0; w < wordIndex; w++) {
-      idx += words[w].length + 1; // +1 for the space
+      idx += words[w].length + 1;
     }
     return idx + charIndex;
   }
@@ -151,19 +146,23 @@ export default function ContactSection() {
       className="relative w-full py-24 sm:py-32 md:py-40 px-6 sm:px-10 md:px-16 lg:px-24 animated-gradient overflow-hidden"
     >
       <div className="max-w-[1200px] mx-auto text-center">
-        {/* Heading with per-character hover — word-level wrapping prevents mid-word breaks */}
         <div
           ref={headingRef}
           className="mb-6 sm:mb-8"
           style={{ perspective: '500px' }}
         >
           <h2
-            className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight flex flex-wrap justify-center gap-x-2 sm:gap-x-3"
+            className="text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight"
+            style={{
+              wordBreak: 'keep-all',
+              overflowWrap: 'anywhere',
+              hyphens: 'none',
+            }}
           >
             {words.map((word, wi) => (
               <span
                 key={wi}
-                className="inline-flex whitespace-nowrap"
+                style={{ display: 'inline-flex', whiteSpace: 'nowrap' }}
               >
                 {word.split('').map((char, ci) => {
                   const globalIndex = getGlobalIndex(wi, ci);
@@ -183,12 +182,14 @@ export default function ContactSection() {
                     </span>
                   );
                 })}
+                {wi < words.length - 1 && (
+                  <span style={{ width: '0.3em', display: 'inline-block' }} />
+                )}
               </span>
             ))}
           </h2>
         </div>
 
-        {/* Subtitle */}
         <p
           ref={subRef}
           className="text-[#f5f0eb]/60 text-lg sm:text-xl md:text-2xl font-heading mb-10 sm:mb-14 max-w-2xl mx-auto"
@@ -198,7 +199,6 @@ export default function ContactSection() {
           Let&apos;s build something great together.
         </p>
 
-        {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-12 sm:mb-16">
           <button
             onClick={handleEmailCopy}
@@ -222,7 +222,6 @@ export default function ContactSection() {
           </a>
         </div>
 
-        {/* Social Links */}
         <div className="flex items-center justify-center gap-4 sm:gap-6">
           {socials.map((social, i) => {
             const Icon = social.icon;
@@ -242,8 +241,7 @@ export default function ContactSection() {
         </div>
       </div>
 
-      {/* Background decoration */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#e63946]/5 rounded-full blur-[200px] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-[#e63946]/5 rounded-full blur-[100px] sm:blur-[200px] pointer-events-none" />
     </section>
   );
 }
