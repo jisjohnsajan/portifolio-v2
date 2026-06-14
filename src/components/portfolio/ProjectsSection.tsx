@@ -46,7 +46,7 @@ const projects: Project[] = [
   subtitle: 'Personal Portfolio Website',
   description:
     'A responsive and interactive personal portfolio featuring smooth scroll animations, custom cursor, certificate lightbox, and a dark recruiter-focused design built with modern web technologies.',
-  image: '/portifolio-v2.jpg',
+  image: '/portifolio-v2.png',
   github: 'https://github.com/jisjohnsajan/portifolio-v2',
   tags: ['Next.js', 'GSAP', 'TypeScript', 'Tailwind'],
   },
