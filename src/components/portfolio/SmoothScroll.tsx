@@ -21,6 +21,43 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
       return;
     }
 
+    // ---- Mobile detection: skip Lenis on touch devices ----
+    // Lenis intercepts touch events which causes lag/jank on mobile.
+    // On mobile, native scroll is already smooth, so Lenis is not needed.
+    const isTouchDevice =
+      typeof window !== 'undefined' &&
+      (('ontouchstart' in window) ||
+        (navigator.maxTouchPoints > 0) ||
+        (window.matchMedia?.('(hover: none) and (pointer: coarse)').matches));
+
+    if (isTouchDevice) {
+      // Still set up ScrollTrigger refreshes for layout recalculation
+      const timers: ReturnType<typeof setTimeout>[] = [];
+      [100, 300, 600, 1000, 2000, 3500].forEach((delay) => {
+        timers.push(setTimeout(() => {
+          try { ScrollTrigger.refresh(); } catch {}
+        }, delay));
+      });
+
+      const handleLoad = () => {
+        try { ScrollTrigger.refresh(); } catch {}
+        timers.push(setTimeout(() => { try { ScrollTrigger.refresh(); } catch {} }, 500));
+        timers.push(setTimeout(() => { try { ScrollTrigger.refresh(); } catch {} }, 1500));
+      };
+
+      if (document.readyState === 'complete') {
+        handleLoad();
+      } else {
+        window.addEventListener('load', handleLoad);
+      }
+
+      return () => {
+        timers.forEach(clearTimeout);
+        window.removeEventListener('load', handleLoad);
+      };
+    }
+
+    // ---- Desktop: enable Lenis smooth scroll ----
     let lenis: any = null;
     let rafCallback: ((time: number) => void) | null = null;
     let destroyed = false;
@@ -28,7 +65,7 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     // Dynamic import of Lenis to avoid SSR/ESM issues
     import('lenis')
       .then((module) => {
-        if (destroyed) return; // Component unmounted during async import
+        if (destroyed) return;
 
         const LenisClass = module.default || module;
 
@@ -38,10 +75,8 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
           smoothWheel: true,
         });
 
-        // Connect Lenis scroll events to GSAP ScrollTrigger
         lenis.on('scroll', ScrollTrigger.update);
 
-        // Use GSAP's ticker to drive Lenis's animation loop
         rafCallback = (time: number) => {
           lenis.raf(time * 1000);
         };
@@ -60,7 +95,6 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
       }, delay));
     });
 
-    // After window load event (images, fonts, etc.)
     const handleLoad = () => {
       try { ScrollTrigger.refresh(); } catch {}
       timers.push(setTimeout(() => { try { ScrollTrigger.refresh(); } catch {} }, 500));
