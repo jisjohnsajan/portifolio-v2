@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jis John Sajan - Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <img src="logo.png" alt="JJS Logo" class="logo">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="skills.html">Skills</a>
+            <a href="projects.html">Projects</a>
+            <a href="education.html" class="active">Education</a>
+            <a href="certifications.html">Certifications</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <section id="education">
+        <h2 class="fade-in">Education</h2>
+        <div class="section-underline fade-in"></div>
+        <div class="timeline">
+            <div class="timeline-item fade-in">
+                <h3>B.Tech in Computer Science &amp; Engineering</h3>
+                <span class="timeline-year">2025 - 2029 (Pursuing)</span>
+                <p>Vimal Jyothi Engineering College (VJEC), Chemperi</p>
+                <p>Currently building a strong foundation in software engineering, algorithms, data structures, and emerging technologies.</p>
+            </div>
+            <div class="timeline-item fade-in">
+                <h3>Higher Secondary Education (12th)</h3>
+                <span class="timeline-year">2025</span>
+                <p>GHSS Nedungome</p>
+                <p>Completed with a strong focus on science and mathematics, preparing for engineering studies.</p>
+            </div>
+            <div class="timeline-item fade-in">
+                <h3>Secondary Education (10th)</h3>
+                <span class="timeline-year">2023</span>
+                <p>GHSS Nedungome</p>
+                <p>Built a solid academic foundation with excellent performance in core subjects.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Jis John Sajan. All rights reserved.</p>
+        <p>Built with passion for technology and innovation.</p>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+        menuToggle.addEventListener('click', () => { nav.classList.toggle('active'); });
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => { nav.classList.remove('active'); });
+        });
+        document.querySelectorAll('.fade-in').forEach(el => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+            }, { threshold: 0.1 });
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

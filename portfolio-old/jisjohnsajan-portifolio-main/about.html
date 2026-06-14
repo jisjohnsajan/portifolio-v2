@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jis John Sajan - About</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <img src="logo.png" alt="JJS Logo" class="logo">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html" class="active">About</a>
+            <a href="skills.html">Skills</a>
+            <a href="projects.html">Projects</a>
+            <a href="education.html">Education</a>
+            <a href="certifications.html">Certifications</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <section id="about">
+        <h2 class="fade-in">About Me</h2>
+        <div class="section-underline fade-in"></div>
+        <div class="about-content">
+            <div class="about-text fade-in">
+                <p>
+                    Hello! I'm Jis John Sajan, a passionate B.Tech Computer Science and Engineering student at Vimal Jyothi Engineering College, Chemperi. My journey in technology is fueled by curiosity and a deep desire to solve real-world problems through code.
+                </p>
+                <p>
+                    I believe in continuous learning and hands-on experience. From programming in C and Python to exploring cutting-edge technologies like LiFi communication systems, I'm always looking for opportunities to expand my skill set and contribute to innovative projects.
+                </p>
+                <p>
+                    When I'm not coding, I enjoy collaborating with peers, participating in tech workshops, and staying updated with the latest trends in software development and emerging technologies.
+                </p>
+            </div>
+            <div class="highlights-grid fade-in">
+                <div class="highlight-card">
+                    <div class="highlight-icon">💡</div>
+                    <h4>Problem Solver</h4>
+                    <p>Strong analytical mindset with 85% proficiency in problem-solving approaches</p>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon">⚡</div>
+                    <h4>Quick Learner</h4>
+                    <p>Adaptable and eager to master new technologies and frameworks</p>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon">🎯</div>
+                    <h4>Goal-Oriented</h4>
+                    <p>Pursuing B.Tech CSE at VJEC with focus on software development excellence</p>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-icon">🤝</div>
+                    <h4>Team Player</h4>
+                    <p>Effective collaborator with strong communication and interpersonal skills</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Jis John Sajan. All rights reserved.</p>
+        <p>Built with passion for technology and innovation.</p>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+        menuToggle.addEventListener('click', () => { nav.classList.toggle('active'); });
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => { nav.classList.remove('active'); });
+        });
+        document.querySelectorAll('.fade-in').forEach(el => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+            }, { threshold: 0.1 });
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

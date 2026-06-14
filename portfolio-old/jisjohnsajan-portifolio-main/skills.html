@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jis John Sajan - Skills</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <img src="logo.png" alt="JJS Logo" class="logo">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="skills.html" class="active">Skills</a>
+            <a href="projects.html">Projects</a>
+            <a href="education.html">Education</a>
+            <a href="certifications.html">Certifications</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <section id="skills">
+        <h2 class="fade-in">Skills &amp; Expertise</h2>
+        <div class="section-underline fade-in"></div>
+        <div class="skills-grid">
+            <div class="skill-category fade-in">
+                <h3>💻 Programming Languages</h3>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span>C Programming</span>
+                        <span>75%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 75%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span>Python</span>
+                        <span>60%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 60%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skill-category fade-in">
+                <h3>🧠 Core Competencies</h3>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span>Problem Solving</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 85%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span>Logical Thinking</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 80%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span>Electronics</span>
+                        <span>70%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 70%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skill-category fade-in">
+                <h3>🤝 Soft Skills</h3>
+                <ul class="skill-list">
+                    <li>Team Collaboration</li>
+                    <li>Effective Communication</li>
+                    <li>Adaptability</li>
+                    <li>Quick Learning</li>
+                    <li>Creative Problem Solving</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Jis John Sajan. All rights reserved.</p>
+        <p>Built with passion for technology and innovation.</p>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+        menuToggle.addEventListener('click', () => { nav.classList.toggle('active'); });
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => { nav.classList.remove('active'); });
+        });
+        document.querySelectorAll('.fade-in').forEach(el => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+            }, { threshold: 0.1 });
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

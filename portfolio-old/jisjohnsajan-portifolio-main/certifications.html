@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jis John Sajan - Certifications</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <img src="logo.png" alt="JJS Logo" class="logo">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="skills.html">Skills</a>
+            <a href="projects.html">Projects</a>
+            <a href="education.html">Education</a>
+            <a href="certifications.html" class="active">Certifications</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <section id="certifications">
+        <h2 class="fade-in">Certifications &amp; Achievements</h2>
+        <div class="section-underline fade-in"></div>
+        <div class="cert-grid">
+            <div class="cert-card fade-in">
+                <img src="cert-digital-101.png" alt="NASSCOM Digital 101 Certificate">
+                <div class="cert-info">
+                    <strong>NASSCOM</strong>
+                    <p>Digital 101</p>
+                </div>
+            </div>
+            <div class="cert-card fade-in">
+                <img src="cert-infosys-python.png" alt="Infosys Springboard Python Certificate">
+                <div class="cert-info">
+                    <strong>Infosys</strong>
+                    <p>Python Fundamentals</p>
+                </div>
+            </div>
+            <div class="cert-card fade-in">
+                <img src="cert-cobol.jpg" alt="COBOL Workshop Certificate">
+                <div class="cert-info">
+                    <strong>COBOL Workshop</strong>
+                    <p>COBOL Workshop</p>
+                </div>
+            </div>
+            <div class="cert-card fade-in">
+                <img src="cert-carrier-craft.png" alt="Carrier Craft 2.0 Certificate">
+                <div class="cert-info">
+                    <strong>TANTRA '25</strong>
+                    <p>Carrier Craft 2.0</p>
+                </div>
+            </div>
+            <div class="cert-card fade-in">
+                <img src="cert-tata-forage.png" alt="Tata Forage Certificate">
+                <div class="cert-info">
+                    <strong>Tata x Forage</strong>
+                    <p>GenAI Data Analytics (2026)</p>
+                </div>
+            </div>
+            <div class="cert-card fade-in">
+                <img src="cert-infosys-c.png" alt="Infosys Springboard C Programming Certificate">
+                <div class="cert-info">
+                    <strong>Infosys</strong>
+                    <p>C Programming</p>
+                </div>
+            </div>
+            <div class="cert-card fade-in">
+                <img src="ai-fluency.jpg" alt="AI Fluency Certificate">
+                <div class="cert-info">
+                    <strong>AI Fluency x Anthropic</strong>
+                    <p>AI Fluency: Framework & Foundations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Jis John Sajan. All rights reserved.</p>
+        <p>Built with passion for technology and innovation.</p>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+        menuToggle.addEventListener('click', () => { nav.classList.toggle('active'); });
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => { nav.classList.remove('active'); });
+        });
+        document.querySelectorAll('.fade-in').forEach(el => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+            }, { threshold: 0.1 });
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
