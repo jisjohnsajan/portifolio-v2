@@ -56,6 +56,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Connect
 
+**Currently Hosted on** : https://jisjohnsajan-portfolio.vercel.app/
+
 - **Email**: [jisjohnsajan@gmail.com](mailto:jisjohnsajan@gmail.com)
 - **LinkedIn**: [jis-john-sajan](https://www.linkedin.com/in/jis-john-sajan-4ab8382ab/)
 - **GitHub**: [jisjohnsajan](https://github.com/jisjohnsajan)
